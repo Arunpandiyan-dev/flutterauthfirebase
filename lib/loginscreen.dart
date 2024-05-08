@@ -60,6 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   passwordController.text = value!;
                 },
                 decoration: const InputDecoration(
+                  suffixIcon: Icon(Icons.remove_red_eye),
                   hintText: "Confirm Password"
                 )
               ),
