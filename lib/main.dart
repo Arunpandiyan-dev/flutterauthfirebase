@@ -1,5 +1,6 @@
-import 'package:ap_firebase_auth/firebasehelper/signup.dart';
-//import 'package:ap_firebase_auth/loginscreen.dart';
+// ignore_for_file: non_constant_identifier_names
+import 'dart:async';
+import 'package:ap_firebase_auth/loginscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -16,8 +17,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: SignUpScreen(),
+    return const  MaterialApp(
+      home: LoginScreen(),
     );
   }
 }
+
+
+
+
