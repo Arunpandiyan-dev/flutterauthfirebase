@@ -1,3 +1,4 @@
+import 'package:ap_firebase_auth/firebasehelper/calculator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -12,17 +13,21 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Home'),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            const Text('Home'),
-            ElevatedButton(onPressed: (){
-              FirebaseAuth.instance.signOut();
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const LoginScreen()));
-            }, child: const Text('Logout')),
-          ],
-        ),
-      
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          GestureDetector(
+            onTap: (){
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const Calculator()));
+            },
+            child: const Text('Calculator',style: TextStyle(fontSize: 30, color: Colors.blue),),    
+          ),
+          ElevatedButton(onPressed: (){
+            FirebaseAuth.instance.signOut();
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const LoginScreen()));
+          }, child: const Text('Logout')),
+        ],
       ),
     );
   } 
