@@ -1,3 +1,4 @@
+import 'package:ap_firebase_auth/Textfield.dart';
 import 'package:ap_firebase_auth/firebasehelper/homescreen.dart';
 import 'package:ap_firebase_auth/firebasehelper/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue[50],
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(24.0),
@@ -49,7 +51,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         }
                         return null;
                       },
-                      decoration: const InputDecoration(hintText: "Enter Email"),
+                      decoration:const InputDecoration(
+                        border: OutlineInputBorder(  
+                           
+                           borderRadius: BorderRadius.all(Radius.circular(8)),
+                           
+                        ),
+                        hintText: "Enter Email",
+                        labelText: "Email",
+                        fillColor: Colors.white,
+                        filled: true,
+                        contentPadding: EdgeInsets.all(18.0),
+                      ),
                     ),
                     const SizedBox(height: 25),
                     TextFormField(
@@ -62,6 +75,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       obscureText: _isVisible,
                       decoration: InputDecoration(
+
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(8))
+                        ),
+                        labelText: "Password",
+                        
+                        fillColor: Colors.white,
+                        filled: true,
+                        contentPadding: const EdgeInsets.all(18.0),
                           suffixIcon: GestureDetector(
                             onTap: (){
                               setState(() {
@@ -72,23 +94,30 @@ class _LoginScreenState extends State<LoginScreen> {
                                 _isVisible ? Icons.visibility : Icons.visibility_off)),
                         hintText: "Enter Password"),
                     ),
-                    const SizedBox(height: 25),
-                    ElevatedButton(
-                      onPressed: _login,
-                      child: const Text("Login"),
+                    const SizedBox(height: 25),  
+                    GestureDetector(
+                      onTap: _login,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: Color(0xFF0175C2),
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                        ),
+                        alignment: Alignment.center,
+                        height: 50,
+                        width: double.infinity,
+                        child: const Text('Login',style: TextStyle(color:Color(0xFFFFFFFF),fontSize: 18,fontWeight: FontWeight.w500),),
+                      ),
                     ),
-                    //google login
-                    
                     const SizedBox(height: 25),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text("Don't have an account? ", style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
+                        const Text("Don't have an account? ", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400)),
                         GestureDetector(
                           onTap: () {
                             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SignUpScreen()));
                           },
-                          child: const Text("Create Account", style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
+                          child: const Text("Create Account", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
                         ),
                       ],
                     ),
@@ -126,7 +155,6 @@ class _LoginScreenState extends State<LoginScreen> {
             message = 'Login failed. Please try again.';
             break;
         }
-        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
       }
     }
