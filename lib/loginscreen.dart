@@ -1,4 +1,4 @@
-import 'package:ap_firebase_auth/Textfield.dart';
+// ignore_for_file: use_build_context_synchronously
 import 'package:ap_firebase_auth/firebasehelper/homescreen.dart';
 import 'package:ap_firebase_auth/firebasehelper/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -52,10 +52,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         return null;
                       },
                       decoration:const InputDecoration(
-                        border: OutlineInputBorder(  
-                           
+                        border: OutlineInputBorder(
                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                           
                         ),
                         hintText: "Enter Email",
                         labelText: "Email",
@@ -95,11 +93,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         hintText: "Enter Password"),
                     ),
                     const SizedBox(height: 25),  
+                    
                     GestureDetector(
                       onTap: _login,
                       child: Container(
                         decoration: const BoxDecoration(
-                          color: Color(0xFF0175C2),
+                          color:Colors.blue,
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                         ),
                         alignment: Alignment.center,
@@ -112,12 +111,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text("Don't have an account? ", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400)),
+                        const Text("Don't have an account? ", style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400)),
                         GestureDetector(
                           onTap: () {
                             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SignUpScreen()));
                           },
-                          child: const Text("Create Account", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                          child: const Text("Create Account", style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
                         ),
                       ],
                     ),
@@ -138,9 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
           email: _emailController.text,
           password: _passwordController.text,
         );
-        // ignore: use_build_context_synchronously
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
-        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Login Successful")));
       } on FirebaseAuthException catch (e) {
         String message;
