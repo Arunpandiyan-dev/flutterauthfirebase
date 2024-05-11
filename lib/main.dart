@@ -1,6 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 import 'dart:async';
-import 'package:ap_firebase_auth/loginscreen.dart';
+import 'package:ap_firebase_auth/auth%20and%20home/loginscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 

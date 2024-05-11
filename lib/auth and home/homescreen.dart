@@ -1,8 +1,8 @@
-import 'package:ap_firebase_auth/firebasehelper/calculator.dart';
+import 'package:ap_firebase_auth/auth%20and%20home/calculator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../loginscreen.dart';
+import 'loginscreen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);

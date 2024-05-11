@@ -1,7 +1,7 @@
 //import 'dart:math';
 
 //import 'package:ap_firebase_auth/firebasehelper/dbhelper.dart';
-import 'package:ap_firebase_auth/loginscreen.dart';
+import 'package:ap_firebase_auth/auth%20and%20home/loginscreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
