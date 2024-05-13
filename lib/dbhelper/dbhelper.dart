@@ -1,3 +1,5 @@
+
+
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthenicationHelper{
@@ -41,12 +43,18 @@ class AuthenicationHelper{
   Future resetPassword(String email) async{
     try{
       return await _auth.sendPasswordResetEmail(email: email);
+
     }catch(e){
       print(e);
-      
+
+    }
+  }
+ Future forgotPassword(String email) async{
+    try{
+      return await _auth.sendPasswordResetEmail(email: email);
+    }catch(e){
+      print(e);
     }
   }
 
-  
 }
-

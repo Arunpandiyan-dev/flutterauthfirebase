@@ -70,7 +70,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     const SizedBox(height: 25,),
                     TextFormField(
-                      obscureText: _isVisible2,
+                      obscureText: _isVisible,
                       controller: passwordController,
                       
                       validator: (value) {
@@ -95,11 +95,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           suffixIcon: GestureDetector(
                               onTap: (){
                                 setState(() {
-                                  _isVisible2 = !_isVisible2;
+                                  _isVisible = !_isVisible;
                                 });
                               },
                               child: Icon(
-                                  _isVisible2 ? Icons.visibility : Icons.visibility_off)),
+                                  _isVisible ? Icons.visibility : Icons.visibility_off)),
                         ),
                     ),
                      const SizedBox(height: 25,),
@@ -130,11 +130,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           suffixIcon: GestureDetector(
                               onTap: (){
                                 setState(() {
-                                  _isVisible = !_isVisible;
+                                  _isVisible2 = !_isVisible2;
                                 });
                               },
                               child: Icon(
-                                  _isVisible ? Icons.visibility : Icons.visibility_off)),
+                                  _isVisible2 ? Icons.visibility : Icons.visibility_off)),
                         ),
                       
                     ),

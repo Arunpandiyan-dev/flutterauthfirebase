@@ -1,4 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
+import 'package:ap_firebase_auth/auth%20and%20home/forgotpass.dart';
 import 'package:ap_firebase_auth/auth%20and%20home/homescreen.dart';
 import 'package:ap_firebase_auth/auth%20and%20home/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -106,6 +107,17 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: double.infinity,
                         child: const Text('Login',style: TextStyle(color:Color(0xFFFFFFFF),fontSize: 18,fontWeight: FontWeight.w500),),
                       ),
+                    ),
+                    const SizedBox(height: 25),
+                     Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgotPassword()));
+                        },
+                          child: const Text('forgot password?',style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.blue),)),
+                      ],
                     ),
                     const SizedBox(height: 25),
                     Row(
