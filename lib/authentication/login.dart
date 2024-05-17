@@ -1,6 +1,10 @@
-import 'package:ap_firebase_auth/authentication/signup.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:ap_firebase_auth/flutter%20bloc/authentication_bloc.dart';
+import 'package:ap_firebase_auth/flutter%20bloc/authentication_event.dart';
+import 'package:ap_firebase_auth/flutter%20bloc/authentication_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'forgotpassword.dart';
+import 'signup.dart';
 import '../screens/homescreen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -19,25 +23,16 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: Container(
-          alignment: Alignment.center,
-          margin: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: Colors.grey[300],
-            borderRadius: BorderRadius.circular(30),
-          ),
-          child: const Icon(Icons.arrow_back),
-        ),
-      ),
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Form(
             key: formKey,
             child: Center(
               child: Column(
                 children: [
+                  const SizedBox(height: 130),
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Text("Login Screen", style: TextStyle(fontSize: 28, fontWeight: FontWeight.w700)),
@@ -48,7 +43,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Text("Enter valid email and password", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400)),
                   ),
                   const SizedBox(height: 25),
-                  // Textfield1
                   TextFormField(
                     controller: _emailController,
                     validator: (value) {
@@ -68,9 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   const SizedBox(height: 25),
-                  // Textfield2 pass
                   TextFormField(
-                    
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Please enter your password";
@@ -78,21 +70,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       return null;
                     },
                     controller: _passwordController,
-                    obscureText: _isVisible ,
+                    obscureText: _isVisible,
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       labelText: "Password",
                       hintText: "Enter Password",
-                      border:const  OutlineInputBorder(),
-                      prefixIcon:const  Icon(Icons.password),
+                      border: const OutlineInputBorder(),
+                      prefixIcon: const Icon(Icons.password),
                       suffixIcon: GestureDetector(
-                        onTap: (){
-                           setState(() {
-                             _isVisible = ! _isVisible;
-                           });
+                        onTap: () {
+                          setState(() {
+                            _isVisible = !_isVisible;
+                          });
                         },
                         child: Icon(_isVisible ? Icons.visibility : Icons.visibility_off),
-                      )
+                      ),
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -101,16 +93,22 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          // Implement forgot password functionality here
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPassword()));
                         },
                         child: const Text('forgot password?', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.blue)),
                       ),
                     ],
                   ),
                   const SizedBox(height: 25),
-                  // login button
                   GestureDetector(
-                    onTap: _login,
+                    onTap: () {
+                      if (formKey.currentState!.validate()) {
+                        context.read<AuthenticationBloc>().add(LoginRequested(
+                              _emailController.text.trim(),
+                              _passwordController.text.trim(),
+                            ));
+                      }
+                    },
                     child: Container(
                       decoration: const BoxDecoration(
                         color: Colors.blue,
@@ -129,11 +127,29 @@ class _LoginScreenState extends State<LoginScreen> {
                       const Text("Don't have an account? ", style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400)),
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const SignupScreen()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => SignupScreen()));
                         },
-                        child: const Text("Create Account", style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500)),
+                        child: const Text("Create Account", style: TextStyle(color: Colors.blue, fontSize: 17, fontWeight: FontWeight.w500)),
                       ),
                     ],
+                  ),
+                  BlocConsumer<AuthenticationBloc, AuthenticationState>(
+                    listener: (context, state) {
+                      if (state is AuthenticationSuccess) {
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+                      } else if (state is AuthenticationFailure) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(state.error)),
+                        );
+                      }
+                    },
+                    builder: (context, state) {
+                      if (state is AuthenticationLoading) {
+                        return const CircularProgressIndicator();
+                      } else {
+                        return Container();
+                      }
+                    },
                   ),
                 ],
               ),
@@ -142,33 +158,5 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
-  }
-  Future<void> _login() async {
-    if (formKey.currentState!.validate()) {
-      try {
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: _emailController.text.trim(),
-          password: _passwordController.text.trim(),
-        );
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
-      } catch (e) {
-        print(e);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Login failed. Please check your credentials and try again.'),
-          ),
-        );
-        // Handle login errors, such as invalid credentials
-        // For example:
-
-        print('Login failed: $e');
-        // Show error message to the user
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Login failed. Please check your credentials and try again.'),
-          ),
-        );
-      }
-    }
   }
 }
